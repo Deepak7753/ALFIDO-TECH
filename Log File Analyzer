@@ -1,0 +1,16 @@
+def analyze_logs(file_path):
+    with open(file_path, 'r') as f:
+        logs = f.readlines()
+
+    failed_attempts = {}
+    for line in logs:
+        if "Failed login" in line:
+            ip = line.split()[0]
+            failed_attempts[ip] = failed_attempts.get(ip, 0) + 1
+
+    for ip, count in failed_attempts.items():
+        if count > 5:
+            print(f"Suspicious IP: {ip} - {count} failed attempts")
+
+# Example
+analyze_logs("server_logs.txt")
